@@ -9,7 +9,7 @@ namespace LeastCommonMultiple
 {
     class LeastCommonMultiple
     {
-        
+
         static string CreateCorrectExpression(string expression)
         {
             if (expression.Length == 0)
@@ -97,7 +97,7 @@ namespace LeastCommonMultiple
                     exp.Append('1');
                 }
             }
-            
+
             return exp.ToString();
         }
 
@@ -150,36 +150,6 @@ namespace LeastCommonMultiple
             return denominators;
         }
 
-        
-        static List<int> GetPrimeNumbers(int number) // Използвам решетка на Ератостен за намиране на всички прости числа до даденото число
-        {
-            List<int> primeNumbers = new List<int>();
-            bool[] isPrime = new bool[Math.Abs(number) + 1];
-            for (int i = 2; i < isPrime.Length; i++)
-            {
-                isPrime[i] = true;
-            }
-            for (int i = 2; i < isPrime.Length; i++)
-            {
-                if (isPrime[i] == true)
-                {
-                    for (int j = i * i; j < isPrime.Length; j += i)
-                    {
-                        isPrime[j] = false;
-                    }
-                }
-            }
-            for (int i = 2; i < isPrime.Length; i++)
-            {
-                if (isPrime[i] == true)
-                {
-                    primeNumbers.Add(i);
-                }
-            }
-
-            return primeNumbers;
-        }
-
         public static int GetLCM(int a, int b) // Използваме алгоритъм за намиране на най-малко общо кратно на 2 числа
         {
             int temp;
@@ -210,7 +180,7 @@ namespace LeastCommonMultiple
             int ratio;
             for (int i = 0; i < nominators.Length; i++)
             {
-                
+
                 ratio = leastMultiple / denominators[i];
                 nominators[i] *= ratio;
             }
@@ -218,7 +188,7 @@ namespace LeastCommonMultiple
         }
 
         static int CalculateNominators(int[] nominators, List<string> operators)
-        { 
+        {
             int result = nominators[0];
 
             for (int i = 1; i < nominators.Length; i++)
@@ -238,18 +208,36 @@ namespace LeastCommonMultiple
             return result;
         }
 
-        static string CreateReduction(int nominator, int denominator)
+        static List<int> GetPrimeNumbers(int number) // Използвам решетка на Ератостен за намиране на всички прости числа до даденото число
         {
-            int min = 0;
+            List<int> primeNumbers = new List<int>();
+            bool[] isPrime = new bool[Math.Abs(number) + 1];
+            for (int i = 2; i < isPrime.Length; i++)
+            {
+                isPrime[i] = true;
+            }
+            for (int i = 2; i < isPrime.Length; i++)
+            {
+                if (isPrime[i] == true)
+                {
+                    for (int j = i * i; j < isPrime.Length; j += i)
+                    {
+                        isPrime[j] = false;
+                    }
+                }
+            }
+            for (int i = 2; i < isPrime.Length; i++)
+            {
+                if (isPrime[i] == true) primeNumbers.Add(i);
+            }
+
+            return primeNumbers;
+        }
+
+        static string CreateReduction(int nominator, int denominator)
+        {            
             int absNominator = Math.Abs(nominator);
-            if (absNominator < denominator)
-            {
-                min = nominator;
-            }
-            else
-            {
-                min = denominator;
-            }
+            int min = Math.Min(absNominator, denominator);
             List<int> primeNumbers = GetPrimeNumbers(min); // намираме всички прости числа съдържащи се в даденото число
             foreach (int prime in primeNumbers)
             {
@@ -268,7 +256,7 @@ namespace LeastCommonMultiple
             try
             {
                 Console.Write("Input expression of fractions: ");
-                string expression = "3/45 + 1/2- 4/7";
+                string expression = Console.ReadLine();
                 if (expression.Length == 1)
                 {
                     Console.WriteLine(expression);
@@ -310,7 +298,7 @@ namespace LeastCommonMultiple
             {
                 Console.WriteLine("Can't input zero in denominators!");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
